@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Configuration
 @EnableKafka
+@Configuration
 public class ConsumerConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Message> kafkaListenerContainerFactory(){
@@ -30,14 +30,14 @@ public class ConsumerConfiguration {
     @Bean
     public ConsumerFactory<String,Message> consumerFactory(){
         return new DefaultKafkaConsumerFactory<>(
-                consumerConfiguration(),
+                consumerConfig(),
                 new StringDeserializer(),
                 new JsonDeserializer<>(Message.class)
         );
     }
 
     @Bean
-    public Map<String, Object> consumerConfiguration( ){
+    public Map<String, Object> consumerConfig( ){
         Map<String,Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstant.BROKER);
         config.put(ConsumerConfig.GROUP_ID_CONFIG,KafkaConstant.GROUP_ID);

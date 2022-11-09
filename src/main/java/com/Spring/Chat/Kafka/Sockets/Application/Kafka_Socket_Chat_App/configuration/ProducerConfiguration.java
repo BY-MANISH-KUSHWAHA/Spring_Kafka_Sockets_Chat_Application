@@ -16,17 +16,17 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
 @EnableKafka
+@Configuration
 public class ProducerConfiguration {
     @Bean
     public ProducerFactory<String, Message> producerFactory(){
         return new DefaultKafkaProducerFactory<>(
-                producerConfiguration()
+                producerConfig()
         );
     }
     @Bean
-    public Map<String, Object> producerConfiguration( ){
+    public Map<String, Object> producerConfig( ){
         Map<String,Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstant.BROKER);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
