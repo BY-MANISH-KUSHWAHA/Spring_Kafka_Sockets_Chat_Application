@@ -19,19 +19,23 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class ProducerConfiguration {
+
+
+    @Bean // Configuration for Producer
+    public Map<String, Object> producerConfig( ){
+        Map<String,Object> config = new HashMap<>();
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstant.BROKER); // Kafka Server URL
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class); // Data encoding for key
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);// Data encoding for value
+        System.out.println(config);
+        return config;
+    }
+
     @Bean
     public ProducerFactory<String, Message> producerFactory(){
         return new DefaultKafkaProducerFactory<>(
-                producerConfig()
+                producerConfig() // method for creating "Producer Instances"  on Kafka Broker
         );
-    }
-    @Bean
-    public Map<String, Object> producerConfig( ){
-        Map<String,Object> config = new HashMap<>();
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstant.BROKER);
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        return config;
     }
 
     @Bean
